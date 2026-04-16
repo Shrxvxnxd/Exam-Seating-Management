@@ -94,6 +94,38 @@ cd Exam-Portal
 
 ---
 
+## 🐳 Docker Support
+
+The project is fully Dockerized for easy deployment and local development.
+
+### 🍱 Using Docker Compose (Recommended)
+You can start both the backend and frontend services with a single command:
+```bash
+docker-compose up --build
+```
+This will:
+- Build the backend and frontend images.
+- Map the Backend to `http://localhost:5000`.
+- Map the Frontend to `http://localhost:3000`.
+
+### 🛠️ Individual Containers
+
+#### Backend
+```bash
+cd backend
+docker build -t exam-portal-backend .
+docker run -p 5000:5000 --env-file .env exam-portal-backend
+```
+
+#### Frontend
+```bash
+cd frontend
+docker build -t exam-portal-frontend .
+docker run -p 3000:3000 exam-portal-frontend
+```
+
+---
+
 ## 🏃 Commands
 
 ### 🟢 Quick Start (Windows)
