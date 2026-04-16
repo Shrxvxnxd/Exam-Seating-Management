@@ -1,0 +1,44 @@
+name: Vercel Production Deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/**'
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  Deploy-Production:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+        
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: frontend
+
+      - name: Create .env file
+        working-directory: frontend
+        run: |
+          echo "NEXT_PUBLIC_GOOGLE_CLIENT_ID=1073442925890-piicq0mov9kl1cdfppi71mbets1170t3.apps.googleusercontent.com" >> .env
+          echo "NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAACOODqSLTzIoaFFY" >> .env
+          echo "NEXT_PUBLIC_API_BASE_URL=https://exam-portal-c6ca.onrender.com" >> .env
+          echo "VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}" >> .env
+          echo "VERCEL_PROJECT_ID=${{ secrets.VERCEL_PROJECT_ID }}" >> .env
+        
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: frontend
+        
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: frontend
