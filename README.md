@@ -53,8 +53,8 @@ This portal serves as a centralized platform for educational institutions to aut
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Shrxvxnxd/Exam-Portal.git
-cd Exam-Portal
+git clone https://github.com/Shrxvxnxd/Exam-Seating-Management.git
+cd Exam-Seating-Management
 ```
 
 ### 2. Backend Configuration
